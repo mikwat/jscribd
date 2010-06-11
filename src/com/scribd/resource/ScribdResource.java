@@ -11,10 +11,14 @@ import com.scribd.Api;
 
 public abstract class ScribdResource {
 	
-	protected Api api = null;
+	protected final Api api;
 	protected boolean saved = false;
 	protected boolean created = false;
 	private Map<String, Object> attributes = new HashMap<String, Object>();
+	
+	public ScribdResource(Api api) {
+		this.api = api;
+	}
 	
 	public abstract void save();
 	

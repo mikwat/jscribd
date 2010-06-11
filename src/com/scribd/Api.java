@@ -8,15 +8,15 @@ import org.w3c.dom.Document;
 import com.scribd.resource.ScribdUser;
 
 public interface Api {
-	public Document sendRequest(String method, Map<String, Object> fields);
+	Document sendRequest(String method, Map<String, Object> fields);
 	
-	public Document sendRequest(String method, Map<String, Object> fields, File file);
+	Document sendRequest(String method, Map<String, Object> fields, File file);
 	
-	public ScribdUser login(String username, String password);
+	ScribdUser login(String username, String password);
 	
-	public void setUser(ScribdUser user);
+	void setUser(ScribdUser user);
 	
-	public ScribdUser getUser();
+	ScribdUser getUser();
 }
 
 class NotReadyException extends RuntimeException {

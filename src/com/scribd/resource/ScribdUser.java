@@ -16,11 +16,11 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class ScribdUser extends ScribdResource {
 	
 	public ScribdUser(Api api) {
-		this.api = api;
+		super(api);
 	}
 	
 	public ScribdUser(Api api, Node xml) {
-		this.api = api;
+		super(api);
 		
 		loadAttributes(xml);
 		saved = true;
@@ -28,7 +28,7 @@ public class ScribdUser extends ScribdResource {
 	}
 	
 	public ScribdUser(Api api, Map<String, Object> attributes) {
-		this.api = api;
+		super(api);
 		
 		setAttributes(attributes);
 	}
@@ -93,7 +93,7 @@ public class ScribdUser extends ScribdResource {
 			loadAttributes(xml.getFirstChild());
 			api.setUser(this);
 		} else {
-			throw new RuntimeException("Cannot update a user once that user's been saved");
+			throw new IllegalStateException("Cannot update a user once that user's been saved");
 		}
 	}
 }

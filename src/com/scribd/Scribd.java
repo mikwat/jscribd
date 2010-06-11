@@ -15,7 +15,7 @@ public class Scribd {
 	private static final int DEFAULT_SEARCH_LIMIT = 10;
 	private static final int DEFAULT_SEARCH_OFFSET = 1;
 
-	private Api api;
+	private final Api api;
 	
 	public Scribd() {
 		api = new ScribdApi();

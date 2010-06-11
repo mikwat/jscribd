@@ -95,7 +95,7 @@ public class ScribdApi implements Api {
 		}
 
 		if (method == null) {
-			throw new IllegalArgumentException("Method should be given");
+			throw new NullPointerException("Method should be given");
 		}
 
 		fields.put("method", method);

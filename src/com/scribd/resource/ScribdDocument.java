@@ -18,21 +18,19 @@ public class ScribdDocument extends ScribdResource {
 	private Map<String, String> downloadUrls = new HashMap<String, String>();
 	
 	public ScribdDocument(Api api, Node xml) {
-		this.api = api;
-		
-		loadAttributes(xml);
-		saved = true;
-		created = true;
+		this(api, null, xml);
 	}
 	
 	public ScribdDocument(Api api, Map<String, Object> attributes) {
-		this.api = api;
-		
-		setAttributes(attributes);
+		this(api, null, attributes);
+	}
+	
+	public ScribdDocument(Api api, File file, Map<String, Object> attributes) {
+		this(api, file, null, attributes);
 	}
 	
 	public ScribdDocument(Api api, ScribdUser owner, Node xml) {
-		this.api = api;
+		super(api);
 		this.owner = owner;
 		
 		loadAttributes(xml);
@@ -41,18 +39,12 @@ public class ScribdDocument extends ScribdResource {
 	}
 	
 	public ScribdDocument(Api api, File file, ScribdUser owner, Map<String, Object> attributes) {
-		this.api = api;
+		super(api);
 		this.owner = owner;
 		this.file = file;
 		setAttributes(attributes);
 	}
 	
-	public ScribdDocument(Api api, File file, Map<String, Object> attributes) {
-		this.api = api;
-		this.file = file;
-		setAttributes(attributes);
-	}
-
 	@Override
 	public boolean destroy() {
 		Map<String, Object> fields = new HashMap<String, Object>(1);
@@ -69,11 +61,11 @@ public class ScribdDocument extends ScribdResource {
 	@Override
 	public void save() {
 		if (!isCreated() && file == null) {
-			throw new RuntimeException("'file' attribute must be specified for new documents");
+			throw new IllegalStateException("'file' attribute must be specified for new documents");
 		}
 		
 		if (isCreated() && file != null && (owner == null || owner.getSessionKey() == null)) {
-			throw new RuntimeException();
+			throw new IllegalStateException();
 		}
 		
 		Map<String, Object> fields = new HashMap<String, Object>(getAttributes());
