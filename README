@@ -14,6 +14,31 @@ the Scribd platform, visit http://www.scribd.com/developers/api
 * Search, tag, and organize documents
 * Associate documents with your users' accounts
 
+== GETTING STARTED:
+
+First, you'll need to get a Scribd API account. Visit
+http://www.scribd.com/developers/api to apply for a platform account.
+
+On the Platform site you will be given an API key and secret. The API object
+will need these to authenticate you, so setup the following environment variables:
+
+  $ export SCRIBD_API_KEY=[api-key]
+  $ export SCRIBD_API_SECRET=[api-secret]
+
+Next, log into Scribd:
+
+  Scribd scribd = new Scribd();
+  ScribdUser user = scribd.getApi().login("[username]", "[password]");
+
+You are now ready to use Scribd to manage your documents. For instance, to
+upload a document:
+
+  Map<String, Object> attributes = new HashMap<String, Object>();
+  attributes.put("access", "private");
+  File file = new File("[path-to-file]");
+  ScribdDocument uploadDoc = new ScribdDocument(scribd.getApi(), file, user, attributes);
+  uploadDoc.save();
+
 == REQUIREMENTS:
 
 * A Scribd API account
