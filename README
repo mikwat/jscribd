@@ -1,0 +1,25 @@
+= jscribd
+
+* 1.0 (June 11, 2010)
+
+== DESCRIPTION:
+
+jscribd is a Java library for interacting with the Scribd API. For more information on
+the Scribd platform, visit http://www.scribd.com/developers/api
+
+== FEATURES:
+
+* Upload your documents to Scribd's servers
+* Upload local files or from remote web sites
+* Search, tag, and organize documents
+* Associate documents with your users' accounts
+
+== REQUIREMENTS:
+
+* A Scribd API account
+* apache-mime4j-0.6.jar
+* commons-logging-1.1.1.jar
+* httpclient-4.0.jar
+* httpcore-4.0.1.jar
+* httpcore-nio-4.0.1.jar
+* httpmime-4.0.jar
