@@ -25,9 +25,14 @@ will need these to authenticate you, so setup the following environment variable
   $ export SCRIBD_API_KEY=[api-key]
   $ export SCRIBD_API_SECRET=[api-secret]
 
+  Scribd scribd = new Scribd();
+
+Alternatively, you can pass your API key and secret into the ScribdApi constructor:
+
+  Scribd scribd = new Scribd(new ScribdApi("[api-key]", "[api-secret]"));
+
 Next, log into Scribd:
 
-  Scribd scribd = new Scribd();
   ScribdUser user = scribd.getApi().login("[username]", "[password]");
 
 You are now ready to use Scribd to manage your documents. For instance, to
@@ -42,9 +47,10 @@ upload a document:
 == REQUIREMENTS:
 
 * A Scribd API account
-* apache-mime4j-0.6.jar
-* commons-logging-1.1.1.jar
-* httpclient-4.0.jar
-* httpcore-4.0.1.jar
-* httpcore-nio-4.0.1.jar
-* httpmime-4.0.jar
+* The following libraries (included in lib):
+ * apache-mime4j-0.6.jar
+ * commons-logging-1.1.1.jar
+ * httpclient-4.0.jar
+ * httpcore-4.0.1.jar
+ * httpcore-nio-4.0.1.jar
+ * httpmime-4.0.jar
