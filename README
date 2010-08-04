@@ -14,6 +14,16 @@ the Scribd platform, visit http://www.scribd.com/developers/api
 * Search, tag, and organize documents
 * Associate documents with your users' accounts
 
+== BUILDING:
+
+To build the jscribd jar, run:
+
+  $ ant dist
+
+You'll find the jar in:
+
+  dist/lib
+
 == GETTING STARTED:
 
 First, you'll need to get a Scribd API account. Visit
