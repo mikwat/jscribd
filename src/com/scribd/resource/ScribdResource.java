@@ -9,6 +9,10 @@ import org.w3c.dom.NodeList;
 
 import com.scribd.Api;
 
+/**
+ * The base class for other Scribd API resources.
+ *
+ */
 public abstract class ScribdResource {
 	
 	protected final Api api;
@@ -48,6 +52,11 @@ public abstract class ScribdResource {
 		this.attributes.put(attr, val);
 	}
 	
+	/**
+	 * Load this objects attribute map with the contents of an XML document. The XML document is expected
+	 * to come from a Scribd API response.
+	 * @param xml
+	 */
 	public void loadAttributes(Node xml) {
 		attributes.clear();
 		NodeList nodeList = xml.getChildNodes();

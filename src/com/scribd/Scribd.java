@@ -10,6 +10,10 @@ import org.w3c.dom.NodeList;
 
 import com.scribd.resource.ScribdDocument;
 
+/**
+ *
+ *
+ */
 public class Scribd {
 	
 	private static final int DEFAULT_SEARCH_LIMIT = 10;
@@ -29,10 +33,28 @@ public class Scribd {
 		return api;
 	}
 	
+	/**
+	 * For more information, see the Scribd API documentation:
+	 * http://www.scribd.com/developers/api?method_name=docs.search
+	 *
+	 * @param scope The search scope.
+	 * @param query The search query.
+	 * @return A list of documents matching the search parameters.
+	 */
 	public List<ScribdDocument> findDocuments(String scope, String query) {
 		return findDocuments(scope, query, DEFAULT_SEARCH_LIMIT, DEFAULT_SEARCH_OFFSET);
 	}
 
+	/**
+	 * For more information, see the Scribd API documentation:
+	 * http://www.scribd.com/developers/api?method_name=docs.search
+	 *
+	 * @param scope The search scope.
+	 * @param query The search query.
+	 * @param limit The maximum number of results to return. Translates to the "num_results" API parameter.
+	 * @param offset The search result offset. Translates to the "num_start" API parameter.
+	 * @return A list of documents matching the search parameters.
+	 */
 	public List<ScribdDocument> findDocuments(String scope, String query, int limit, int offset) {
 		Map<String, Object> fields = new HashMap<String, Object>();
 		fields.put("scope", scope);
