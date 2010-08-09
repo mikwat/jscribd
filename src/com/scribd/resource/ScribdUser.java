@@ -96,4 +96,29 @@ public class ScribdUser extends ScribdResource {
 			throw new IllegalStateException("Cannot update a user once that user's been saved");
 		}
 	}
+
+	public List<ScribdCollection> getCollections() {
+		return getCollections(null);
+	}
+
+	public List<ScribdCollection> getCollections(String scope) {
+		if (!isReal()) {
+			return null;
+		}
+
+		Map<String, Object> fields = new HashMap<String, Object>();
+		if (scope != null) {
+			fields.put("scope", scope);
+		}
+		fields.put("session_key", getSessionKey());
+		Document xml = api.sendRequest("docs.getCollections", fields);
+
+		List<ScribdCollection> list = new ArrayList<ScribdCollection>();
+		NodeList results = xml.getElementsByTagName("result");
+		for (int i = 0; i < results.getLength(); i++) {
+			list.add(new ScribdCollection(api, results.item(i)));
+		}
+
+		return list;
+	}
 }

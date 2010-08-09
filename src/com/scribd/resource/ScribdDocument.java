@@ -55,7 +55,7 @@ public class ScribdDocument extends ScribdResource {
 		NamedNodeMap rspAttrs = rsp.getAttributes();
 		Node stat = rspAttrs.getNamedItem("stat");
 		
-		return "ok".equals(stat.getTextContent());
+		return stat != null && "ok".equals(stat.getTextContent());
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class ScribdDocument extends ScribdResource {
 		if (isCreated() && file != null && (owner == null || owner.getSessionKey() == null)) {
 			throw new IllegalStateException();
 		}
-		
+
 		Map<String, Object> fields = new HashMap<String, Object>(getAttributes());
 		if (owner != null) {
 			fields.put("session_key", owner.getSessionKey());
@@ -140,5 +140,21 @@ public class ScribdDocument extends ScribdResource {
 		}
 		
 		return downloadUrl;
+	}
+
+	public boolean uploadThumb(File file) {
+		Map<String, Object> fields = new HashMap<String, Object>();
+		if (owner != null) {
+			fields.put("session_key", owner.getSessionKey());
+		}
+
+		fields.put("doc_id", getAttribute("doc_id"));
+
+		Document xml = api.sendRequest("docs.uploadThumb", fields, file);
+		Node rsp = xml.getElementsByTagName("rsp").item(0);
+		NamedNodeMap rspAttrs = rsp.getAttributes();
+		Node stat = rspAttrs.getNamedItem("stat");
+
+		return stat != null && "ok".equals(stat.getTextContent());
 	}
 }

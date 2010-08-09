@@ -30,12 +30,19 @@
     <!-- Compile the java code from ${src} into ${build} -->
     <javac srcdir="${src}" destdir="${build}">
       <classpath refid="classpath.base" />
+    </javac>
+  </target>
+
+  <target name="compile-debug" depends="init" description="compile the source with debug flags">
+    <!-- Compile the java code from ${src} into ${build} with debug flags -->
+    <javac srcdir="${src}" destdir="${build}" debug="on" debuglevel="lines,vars,source">
+      <classpath refid="classpath.base" />
 	</javac>
   </target>
 
-  <target name="compile-tests" depends="compile" description="compile the test sources">
+  <target name="compile-tests" depends="compile-debug" description="compile the test sources">
     <!-- Compile the java code from ${test} into ${build} -->
-    <javac srcdir="${test}" destdir="${build}">
+    <javac srcdir="${test}" destdir="${build}" debug="on" debuglevel="lines,vars,source">
       <classpath refid="classpath.test" />
     </javac>
   </target>
@@ -46,6 +53,7 @@
       <formatter type="brief" usefile="false" />
       <test name="com.scribd.resource.ScribdUserTest" />
       <test name="com.scribd.resource.ScribdDocumentTest" />
+      <test name="com.scribd.resource.ScribdCollectionTest" />
     </junit>
   </target>
 

@@ -8,7 +8,9 @@ import org.w3c.dom.Document;
 import com.scribd.resource.ScribdUser;
 
 public class MockApi implements Api {
-	
+
+	public int sendRequestCount = 0;
+
 	public MockApi() {
 	}
 
@@ -19,12 +21,13 @@ public class MockApi implements Api {
 
 	@Override
 	public Document sendRequest(String method, Map<String, Object> fields) {
-
+		sendRequestCount++;
 		return null;
 	}
 
 	@Override
 	public Document sendRequest(String method, Map<String, Object> fields, File file) {
+		sendRequestCount++;
 		return null;
 	}
 
