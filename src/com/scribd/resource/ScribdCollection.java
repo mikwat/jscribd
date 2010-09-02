@@ -1,11 +1,14 @@
 package com.scribd.resource;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.scribd.Api;
 
@@ -26,12 +29,30 @@ public class ScribdCollection extends ScribdResource {
 		created = true;
 	}
 
+	public List<ScribdDocument> getDocuments() {
+		return getDocuments(null);
+	}
+
+	public List<ScribdDocument> getDocuments(Map<String, Object> options) {
+		Map<String, Object> fields = (options != null) ? new HashMap<String, Object>(options) : new HashMap<String, Object>();
+		fields.put("session_key", getAttribute("session_key"));
+		Document xml = api.sendRequest("collections.listDocs", fields);
+
+		List<ScribdDocument> list = new ArrayList<ScribdDocument>();
+		NodeList results = xml.getElementsByTagName("result");
+		for (int i = 0; i < results.getLength(); i++) {
+			list.add(new ScribdDocument(api, results.item(i)));
+		}
+
+		return list;
+	}
+
 	public boolean addDocument(ScribdDocument doc) {
-		return addOrRemoveDocument("docs.addToCollection", doc);
+		return addOrRemoveDocument("collections.addDoc", doc);
 	}
 
 	public boolean removeDocument(ScribdDocument doc) {
-		return addOrRemoveDocument("docs.removeFromCollection", doc);
+		return addOrRemoveDocument("collections.removeDoc", doc);
 	}
 
 	private boolean addOrRemoveDocument(String method, ScribdDocument doc) {
