@@ -11,6 +11,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -193,9 +194,10 @@ public class ScribdApi implements Api {
 	}
 
 	private void removeNulls(Map<String, Object> fields) {
-		for (String key : fields.keySet()) {
-			if (fields.get(key) == null) {
-				fields.remove(key);
+		Iterator<Object> iter = fields.values().iterator();
+		while (iter.hasNext()) {
+			if (iter.next() == null) {
+				iter.remove();
 			}
 		}
 	}
