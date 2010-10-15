@@ -50,6 +50,10 @@ public class ScribdDocument extends ScribdResource {
 		Map<String, Object> fields = new HashMap<String, Object>(1);
 		fields.put("doc_id", getAttribute("doc_id"));
 
+		if (getAttribute("my_user_id") != null) {
+			fields.put("my_user_id", getAttribute("my_user_id"));
+		}
+
 		Document xml = api.sendRequest("docs.delete", fields);
 		Node rsp = xml.getElementsByTagName("rsp").item(0);
 		NamedNodeMap rspAttrs = rsp.getAttributes();
