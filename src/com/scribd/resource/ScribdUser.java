@@ -11,8 +11,6 @@ import org.w3c.dom.NodeList;
 
 import com.scribd.Api;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class ScribdUser extends ScribdResource {
 	
 	public ScribdUser(Api api) {
@@ -83,7 +81,7 @@ public class ScribdUser extends ScribdResource {
 	
 	@Override
 	public boolean destroy() {
-		throw new NotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
