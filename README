@@ -24,6 +24,22 @@ You'll find the jar in:
 
   dist/lib
 
+== Maven users:
+
+To build the artifact and install it in your local repository, run:
+
+  $ ant artifact-install
+
+Then add it as a dependency:
+
+<dependency>
+  <groupId>com.scribd</groupId>
+  <artifactId>jscribd</artifactId>
+  <version>1.0</version>
+</dependency>
+
+Make sure the version matches what was built. If in doubt, check in dist/mvn/ .
+
 == GETTING STARTED:
 
 First, you'll need to get a Scribd API account. Visit
