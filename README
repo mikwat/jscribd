@@ -88,3 +88,11 @@ upload a document:
 * The libraries used by jscribd, as listed in build.xml's <artifact:pom> section
   * Ant users: after "ant dist" these can be found in dist/lib; add them to your project classpath
   * Maven users: Just depend on jscribd, maven does the rest
+
+== TROUBLESHOOTING:
+
+ant test: "the class org.apache.tools.ant.taskdefs.optional.junit.JUnitTask was not found."
+Cause: Some Linux distibutions package ant-junit separately from ant. Ensure that the ant-junit
+task is installed. On Fedora, you must have both the "ant" and "ant-junit" packages installed.
+
+

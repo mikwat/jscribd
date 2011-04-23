@@ -59,14 +59,16 @@
   <target name="compile-tests" depends="compile-debug" description="compile the test sources">
     <!-- Compile the java code from ${test} into ${build} -->
     <javac srcdir="${test}" destdir="${build}" debug="on" debuglevel="lines,vars,source"  includeantruntime="false">
-      <classpath refid="classpath.test" />
+      <classpath refid="dependency.test.paths" />
     </javac>
   </target>
 
   <target name="test" depends="compile-tests">
     <junit>
-      <classpath refid="dependency.classpath"/>
-      <classpath location="${build}" />
+      <classpath>
+      	<path refid="dependency.test.paths"/>
+        <pathelement location="${build}" />
+      </classpath>
       <formatter type="brief" usefile="false" />
       <test name="com.scribd.resource.ScribdUserTest" />
       <test name="com.scribd.resource.ScribdDocumentTest" />
