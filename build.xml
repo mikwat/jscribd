@@ -27,6 +27,35 @@
     <path refid="classpath.base" />
   </path>
 
+  <target name="maven_init">
+    <path id="maven-ant-tasks.classpath" path="lib/maven-ant-tasks-2.1.3.jar" />
+    <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
+             uri="antlib:org.apache.maven.artifact.ant"
+             classpathref="maven-ant-tasks.classpath" />
+    
+    <!-- You can override the repo path by setting maven.repo.local on the ant cmdline -->
+    <!-- eg -Dmaven.repo.local=$HOME/maven2repo -->
+    <condition property="maven.repo.local" value="${maven.repo.local}" else="${basedir}/build/mvn-local-repo">
+            <isset property="maven.repo.local"/>
+    </condition>
+    <echo>maven.repo.local=${maven.repo.local}</echo>
+    
+    <artifact:localRepository id="local.repository" path="${maven.repo.local}" layout="default"/>
+    <!-- Keep these in sync with the classpath definitions. Ideally, we'd be using Maven to
+         download and manage dependencies instead of keeping them in lib/ under revision control,
+         but this approach minimizes impact on the build. -->
+    <artifact:pom id="maven.project" groupId="com.scribd" artifactId="jscribd" version="1.0" name="JScribd">
+      <license name="MIT" url="https://github.com/mikwat/jscribd/blob/master/LICENSE"/>
+      <dependency groupId="junit" artifactId="junit" version="4.8.1" scope="test"/>
+      <dependency groupId="org.apache.james" artifactId="apache-mime4j" version="0.6"/>
+      <dependency groupId="org.apache.httpcomponents" artifactId="httpclient" version="4.0"/>
+      <dependency groupId="org.apache.httpcomponents" artifactId="httpmime" version="4.0"/>
+      <dependency groupId="org.apache.httpcomponents" artifactId="httpcore-nio" version="4.0.1"/>
+      <dependency groupId="commons-logging" artifactId="commons-logging" version="1.1.1"/>
+      <dependency groupId="net.jcip" artifactId="jcip-annotations" version="1.0"/>
+    </artifact:pom>
+  </target>
+
   <target name="init">
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${build}" />
@@ -86,33 +115,7 @@
     <delete dir="${doc}" />
   </target>
 
-  <target name="artifact" depends="dist, javadoc">
-	  <path id="maven-ant-tasks.classpath" path="lib/maven-ant-tasks-2.1.3.jar" />
-	  <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
-		   uri="antlib:org.apache.maven.artifact.ant"
-		   classpathref="maven-ant-tasks.classpath" />
-
-	  <!-- You can override the repo path by setting maven.repo.local on the ant cmdline -->
-	  <!-- eg -Dmaven.repo.local=$HOME/maven2repo -->
-	  <condition property="maven.repo.local" value="${maven.repo.local}" else="${basedir}/build/mvn-local-repo">
-		  <isset property="maven.repo.local"/>
-	  </condition>
-	  <echo>maven.repo.local=${maven.repo.local}</echo>
-
-	  <artifact:localRepository id="local.repository" path="${maven.repo.local}" layout="default"/>
-          <!-- Keep these in sync with the classpath definitions. Ideally, we'd be using Maven to
-               download and manage dependencies instead of keeping them in lib/ under revision control,
-               but this approach minimizes impact on the build. -->
-	  <artifact:pom id="maven.project" groupId="com.scribd" artifactId="jscribd" version="1.0" name="JScribd">
-	    <license name="MIT" url="https://github.com/mikwat/jscribd/blob/master/LICENSE"/>
-	    <dependency groupId="junit" artifactId="junit" version="4.8.1" scope="test"/>
-	    <dependency groupId="org.apache.james" artifactId="apache-mime4j" version="0.6"/>
-	    <dependency groupId="org.apache.httpcomponents" artifactId="httpclient" version="4.0"/>
-	    <dependency groupId="org.apache.httpcomponents" artifactId="httpmime" version="4.0"/>
-	    <dependency groupId="org.apache.httpcomponents" artifactId="httpcore-nio" version="4.0.1"/>
-	    <dependency groupId="commons-logging" artifactId="commons-logging" version="1.1.1"/>
-	    <dependency groupId="net.jcip" artifactId="jcip-annotations" version="1.0"/>
-	  </artifact:pom>
+  <target name="artifact" depends="maven_init, dist, javadoc">
 
 	  <property name="artifact-dir" location="${dist}/mvn/${maven.project.groupId}/${maven.project.artifactId}/${maven.project.version}"/>
           <mkdir dir="${artifact-dir}" />
