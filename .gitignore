@@ -1,4 +1,5 @@
 build/
+nbproject/
 dist/
 doc/
 .*.swp
