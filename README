@@ -14,7 +14,7 @@ the Scribd platform, visit http://www.scribd.com/developers/api
 * Search, tag, and organize documents
 * Associate documents with your users' accounts
 
-== BUILDING:
+== BUILDING (Ant users):
 
 To build the jscribd jar, run:
 
@@ -22,9 +22,17 @@ To build the jscribd jar, run:
 
 You'll find the jar in:
 
+  dist/jscribd-20110423.jar
+
+... where '20110423' is YYYYMMDD build timestamp.
+
+jscribd'd dependencies are downloaded and copied into:
+
   dist/lib
 
-== Maven users:
+as part of this process.
+
+== BUILDING (Maven users):
 
 To build the artifact and install it in your local repository, run:
 
@@ -38,26 +46,30 @@ Then add it as a dependency:
   <version>1.0</version>
 </dependency>
 
-Make sure the version matches what was built. If in doubt, check in dist/mvn/ .
+Make sure the version you use in your pom matches what was actually built, in
+case this documentation gets out of date. If in doubt, check in dist/mvn/ .
 
 == GETTING STARTED:
 
 First, you'll need to get a Scribd API account. Visit
 http://www.scribd.com/developers/api to apply for a platform account.
 
-On the Platform site you will be given an API key and secret. The API object
-will need these to authenticate you, so setup the following environment variables:
+On the Platform site you will be given an API key and secret, which the API object
+will need to authenticate you. 
+
+You can pass your API key and secret into the ScribdApi constructor:
+
+  Scribd scribd = new Scribd(new ScribdApi("[api-key]", "[api-secret]"));
+
+Alternately you can setup the following environment variables, but this is
+INSECURE and EXPOSES YOUR CREDENTIALS TO OTHER LOCAL USERS on many platforms:
 
   $ export SCRIBD_API_KEY=[api-key]
   $ export SCRIBD_API_SECRET=[api-secret]
 
   Scribd scribd = new Scribd();
 
-Alternatively, you can pass your API key and secret into the ScribdApi constructor:
-
-  Scribd scribd = new Scribd(new ScribdApi("[api-key]", "[api-secret]"));
-
-Next, log into Scribd:
+Once your credentials are set up, log into Scribd:
 
   ScribdUser user = scribd.getApi().login("[username]", "[password]");
 
@@ -73,10 +85,6 @@ upload a document:
 == REQUIREMENTS:
 
 * A Scribd API account
-* The following libraries (included in lib):
- * apache-mime4j-0.6.jar
- * commons-logging-1.1.1.jar
- * httpclient-4.0.jar
- * httpcore-4.0.1.jar
- * httpcore-nio-4.0.1.jar
- * httpmime-4.0.jar
+* The libraries used by jscribd, as listed in build.xml's <artifact:pom> section
+  * Ant users: after "ant dist" these can be found in dist/lib; add them to your project classpath
+  * Maven users: Just depend on jscribd, maven does the rest
